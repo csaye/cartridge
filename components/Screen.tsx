@@ -77,6 +77,8 @@ export default function Screen() {
 
   // sketches screen with given mouse data
   function sketch(e: MouseEvent) {
+    // return if playing
+    if (playing) return;
     // get mouse index
     const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles);
     // update tiles
@@ -93,7 +95,11 @@ export default function Screen() {
 
   // called on mouse move
   function onMouseMove(e: MouseEvent) {
+    // return if playing
+    if (playing) return;
+    // sketch at mouse position
     if (sketching) sketch(e);
+    // set hover index
     const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles);
     setHoverIndex(mouseIndex);
   }
@@ -105,6 +111,7 @@ export default function Screen() {
 
   // called on mouse leave
   function onMouseLeave() {
+    sketching = false;
     setHoverIndex(-1);
   }
 
@@ -117,7 +124,10 @@ export default function Screen() {
         setSelectedIndex={setSelectedIndex}
       />
       <canvas
-        className={selectedIndex === -1 ? styles.eraser : styles.paintbrush}
+        className={
+          playing ? undefined :
+            selectedIndex === -1 ? styles.eraser : styles.paintbrush
+        }
         ref={canvasRef}
         width={screenPixels}
         height={screenPixels}
@@ -127,6 +137,7 @@ export default function Screen() {
         onMouseLeave={onMouseLeave}
       />
       <Tilebar
+        playing={playing}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
       />
