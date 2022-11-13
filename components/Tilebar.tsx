@@ -38,6 +38,20 @@ export default function Tilebar(props: Props) {
     tilesImage.onload = () => setLoaded(true);
   }, []);
 
+  // draw on data update
+  useEffect(() => {
+    ctx.clearRect(0, 0, screenPixels, screenPixels);
+    ctx.drawImage(tilesImage, 0, 0, screenPixels, tilePixels);
+    for (let x = 0; x < screenTiles; x++) {
+      for (let y = 0; y < screenTiles; y++) {
+        if (y * screenTiles + x === hoverIndex) {
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+          ctx.fillRect(x * tilePixels, y * tilePixels, tilePixels, tilePixels);
+        }
+      }
+    }
+  }, [hoverIndex, selectedIndex, loaded]);
+
   return (
     <div
       className={styles.container}
