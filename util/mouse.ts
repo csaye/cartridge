@@ -23,3 +23,20 @@ export function getMousePosition(
   // return mouse position
   return [mouseX, mouseY];
 }
+
+// returns unit index of mouse position
+export function getMouseIndex(
+  e: MouseEvent,
+  canvas: HTMLCanvasElement,
+  roundUnit: number,
+  unitWidth: number,
+  container?: HTMLDivElement
+) {
+  // get mouse position
+  const [mouseX, mouseY] = getMousePosition(e, canvas, container);
+  // round position
+  const unitX = Math.floor(mouseX / roundUnit);
+  const unitY = Math.floor(mouseY / roundUnit);
+  // return index
+  return unitY * unitWidth + unitX;
+}
