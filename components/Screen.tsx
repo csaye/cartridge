@@ -49,6 +49,22 @@ export default function Screen() {
     }
   }, []);
 
+  // draw on data update
+  useEffect(() => {
+    // clear screen
+    ctx.clearRect(0, 0, screenPixels, screenPixels);
+    // for each tile
+    for (let x = 0; x < screenTiles; x++) {
+      for (let y = 0; y < screenTiles; y++) {
+        // draw hover
+        if (tileIndex === hoverIndex) {
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+          ctx.fillRect(x * tilePixels, y * tilePixels, tilePixels, tilePixels);
+        }
+      }
+    }
+  }, [hoverIndex, tiles, loaded]);
+
   // sketches screen with given mouse data
   function sketch(e: MouseEvent) {
     // get mouse index
