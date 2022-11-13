@@ -52,14 +52,25 @@ export default function Screen() {
 
   return (
     <div className={styles.container}>
+      <Toolbar
+        playing={playing}
+        setPlaying={setPlaying}
+        selectedIndex={selectedIndex}
+        setSelectedIndex={setSelectedIndex}
+      />
       <canvas
+        className={selectedIndex === -1 ? styles.eraser : styles.paintbrush}
         ref={canvasRef}
-        width="256"
-        height="256"
+        width={screenPixels}
+        height={screenPixels}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
+      />
+      <Tilebar
+        selectedIndex={selectedIndex}
+        setSelectedIndex={setSelectedIndex}
       />
     </div>
   );
