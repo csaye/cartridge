@@ -17,6 +17,17 @@ type Props = {
 export default function Tilebar(props: Props) {
   const { selectedIndex, setSelectedIndex } = props;
 
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // get canvas context on start
+  useEffect(() => {
+    if (!containerRef.current) throw 'no container';
+    container = containerRef.current;
+    [canvas, ctx] = getCanvasContext(canvasRef);
+    ctx.imageSmoothingEnabled = false;
+  }, []);
+
   return (
     <div className={styles.container}>
     </div>
