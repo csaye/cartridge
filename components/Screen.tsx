@@ -49,20 +49,37 @@ export default function Screen() {
     }
   }, []);
 
+  // sketches screen with given mouse data
+  function sketch(e: MouseEvent) {
+    // get mouse index
+    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles);
+    // update tiles
+    const newTiles = tiles.slice();
+    newTiles[mouseIndex] = selectedIndex;
+    setTiles(newTiles);
+  }
+
   // called on mouse down
-  function onMouseDown() {
+  function onMouseDown(e: MouseEvent) {
+    sketching = true;
+    sketch(e);
   }
 
   // called on mouse move
-  function onMouseMove() {
+  function onMouseMove(e: MouseEvent) {
+    if (sketching) sketch(e);
+    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles);
+    setHoverIndex(mouseIndex);
   }
 
   // called on mouse up
   function onMouseUp() {
+    sketching = false;
   }
 
   // called on mouse leave
   function onMouseLeave() {
+    setHoverIndex(-1);
   }
 
   return (
