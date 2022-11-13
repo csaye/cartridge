@@ -15,6 +15,19 @@ const keys: { [key: string]: boolean } = {};
 export default function Screen() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const [hoverIndex, setHoverIndex] = useState(-1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [tiles, setTiles] = useState(Array(screenTiles ** 2).fill(-1));
+  const [loaded, setLoaded] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  // initialize images
+  useEffect(() => {
+    tilesImage = new Image();
+    tilesImage.src = '/img/sprites/tiles.png';
+    tilesImage.onload = () => setLoaded(true);
+  }, []);
+
   // get canvas context on start
   useEffect(() => {
     canvas = canvasRef.current;
