@@ -52,6 +52,23 @@ export default function Tilebar(props: Props) {
     }
   }, [hoverIndex, selectedIndex, loaded]);
 
+  // called on mouse down
+  function onMouseDown(e: MouseEvent) {
+    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles, container);
+    setSelectedIndex(mouseIndex);
+  }
+
+  // called on mouse move
+  function onMouseMove(e: MouseEvent) {
+    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles, container);
+    setHoverIndex(mouseIndex);
+  }
+
+  // called on mouse leave
+  function onMouseLeave() {
+    setHoverIndex(-1);
+  }
+
   return (
     <div
       className={styles.container}
