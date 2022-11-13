@@ -30,8 +30,23 @@ export default function Screen() {
 
   // get canvas context on start
   useEffect(() => {
-    canvas = canvasRef.current;
-    ctx = canvas?.getContext('2d');
+    [canvas, ctx] = getCanvasContext(canvasRef);
+    ctx.imageSmoothingEnabled = false;
+  }, []);
+
+  // listen for keys
+  useEffect(() => {
+    // key listeners
+    const onKeyDown = (e: KeyboardEvent) => keys[e.code] = true;
+    const onKeyUp = (e: KeyboardEvent) => delete keys[e.code];
+    // add key listeners
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
+    // clear key listeners
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
+    }
   }, []);
 
   // called on mouse down
