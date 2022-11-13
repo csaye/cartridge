@@ -39,7 +39,25 @@ export default function Tilebar(props: Props) {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      ref={containerRef}
+    >
+      <canvas
+        ref={canvasRef}
+        width={screenPixels}
+        height={tilePixels}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+      />
+      {
+        selectedIndex !== -1 &&
+        <div
+          className={styles.selectArrow}
+          style={{ left: `${32 * selectedIndex + 8}px` }}
+        />
+      }
     </div>
   );
 }
