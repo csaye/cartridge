@@ -1,8 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import styles from '../styles/components/Screen.module.scss';
+import getCanvasContext from '../util/getCanvasContext';
+import { getMouseIndex } from '../util/mouse';
+import { screenPixels, screenTiles, tilePixels } from '../util/units';
+import Tilebar from './Tilebar';
+import Toolbar from './Toolbar';
 
-let canvas;
-let ctx;
+let canvas: HTMLCanvasElement;
+let ctx: CanvasRenderingContext2D;
+let sketching = false;
+let tilesImage: HTMLImageElement;
+const keys: { [key: string]: boolean } = {};
 
 export default function Screen() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
