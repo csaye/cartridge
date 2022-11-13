@@ -17,10 +17,20 @@ export default function Toolbar(props: Props) {
       {
         playing ?
           <button onClick={() => setPlaying(false)}>
-            Stop
+            <Image
+              src="/img/icons/stop.svg"
+              width="24"
+              height="24"
+              alt="stop.svg"
+            />
           </button> :
           <button onClick={() => setPlaying(true)}>
-            Play
+            <Image
+              src="/img/icons/play.svg"
+              width="24"
+              height="24"
+              alt="play.svg"
+            />
           </button>
       }
     </div>
