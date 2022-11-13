@@ -33,6 +33,18 @@ export default function Toolbar(props: Props) {
             />
           </button>
       }
+      <button onClick={() => setSelectedIndex(-1)}>
+        <Image
+          src="/img/icons/eraser.svg"
+          width="24"
+          height="24"
+          alt="eraser.svg"
+        />
+      </button>
+      {
+        selectedIndex === -1 &&
+        <div className={styles.selectArrow} />
+      }
     </div>
   );
 }
