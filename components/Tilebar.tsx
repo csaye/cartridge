@@ -10,12 +10,13 @@ let tilesImage: HTMLImageElement;
 let container: HTMLDivElement;
 
 type Props = {
+  playing: boolean;
   selectedIndex: number;
   setSelectedIndex: Dispatch<number>;
 };
 
 export default function Tilebar(props: Props) {
-  const { selectedIndex, setSelectedIndex } = props;
+  const { playing, selectedIndex, setSelectedIndex } = props;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -83,7 +84,7 @@ export default function Tilebar(props: Props) {
         onMouseLeave={onMouseLeave}
       />
       {
-        selectedIndex !== -1 &&
+        (!playing && selectedIndex !== -1) &&
         <div
           className={styles.selectArrow}
           style={{ left: `${32 * selectedIndex + 8}px` }}

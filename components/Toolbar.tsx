@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Dispatch } from 'react';
 import styles from '../styles/components/Toolbar.module.scss';
 import IconButton from './IconButton';
@@ -31,7 +30,7 @@ export default function Toolbar(props: Props) {
         icon="eraser"
       />
       {
-        selectedIndex === -1 &&
+        (!playing && selectedIndex === -1) &&
         <div className={styles.selectArrow} />
       }
     </div>
