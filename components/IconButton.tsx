@@ -10,7 +10,16 @@ export default function IconButton(props: Props) {
   const { onClick, icon } = props;
 
   return (
-    <div className={styles.container}>
-    </div>
+    <button
+      className={styles.container}
+      onClick={onClick}
+    >
+      <Image
+        src={`/img/icons/${icon}.svg`}
+        width="24"
+        height="24"
+        alt={`${icon}.svg`}
+      />
+    </button>
   );
 }
