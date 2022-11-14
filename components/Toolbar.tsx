@@ -12,16 +12,28 @@ type Props = {
 export default function Toolbar(props: Props) {
   const { playing, setPlaying, selectedIndex, setSelectedIndex } = props;
 
+  // deselects pressed button
+  function blurButton() {
+    const elem = document.activeElement;
+    if (elem instanceof HTMLElement) elem.blur();
+  }
+
   return (
     <div className={styles.container}>
       {
         playing ?
           <IconButton
-            onClick={() => setPlaying(false)}
+            onClick={() => {
+              setPlaying(false);
+              blurButton();
+            }}
             icon="stop"
           /> :
           <IconButton
-            onClick={() => setPlaying(true)}
+            onClick={() => {
+              setPlaying(true);
+              blurButton();
+            }}
             icon="play"
           />
       }
