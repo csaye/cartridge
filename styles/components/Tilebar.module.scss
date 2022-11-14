@@ -1,0 +1,20 @@
+.container {
+  margin-top: 16px;
+  position: relative;
+  cursor: pointer;
+
+  >canvas {
+    background: #fff;
+    display: block;
+  }
+
+  >.selectArrow {
+    position: absolute;
+    top: 40px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #fff;
+  }
+}
