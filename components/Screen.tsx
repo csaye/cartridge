@@ -49,8 +49,8 @@ export default function Screen() {
     }
   }, []);
 
-  // draw on data update
-  useEffect(() => {
+  // draws screen
+  const draw = useCallback(() => {
     // clear screen
     ctx.clearRect(0, 0, screenPixels, screenPixels);
     // for each tile
@@ -73,7 +73,15 @@ export default function Screen() {
         }
       }
     }
-  }, [hoverIndex, tiles, loaded]);
+    // draw player
+    ctx.fillStyle = '#990000';
+    ctx.fillRect(player.x, player.y, tilePixels, tilePixels);
+  }, [hoverIndex, tiles]);
+
+  // draw on data update
+  useEffect(() => {
+    draw();
+  }, [draw]);
 
   // set up game loop
   useEffect(() => {
