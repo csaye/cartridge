@@ -75,6 +75,13 @@ export default function Screen() {
     }
   }, [hoverIndex, tiles, loaded]);
 
+  // set up game loop
+  useEffect(() => {
+    // set times
+    let lastTime: number;
+    let deltaTime: number;
+  }, [draw, playing, move]);
+
   // sketches screen with given mouse data
   function sketch(e: MouseEvent) {
     // return if playing
