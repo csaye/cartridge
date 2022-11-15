@@ -1,5 +1,14 @@
 .container {
   >canvas {
     background: #fff;
+    display: block;
+
+    &.eraser {
+      cursor: url('/img/cursors/eraser.svg') 12 36, default;
+    }
+
+    &.paintbrush {
+      cursor: url('/img/cursors/paintbrush.svg') 12 36, default;
+    }
   }
 }
