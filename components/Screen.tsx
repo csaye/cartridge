@@ -90,6 +90,13 @@ export default function Screen() {
       if (deltaTime !== undefined) move(deltaTime);
       loop = requestAnimationFrame(gameLoop);
     }
+    // run game loop
+    let loop: number;
+    if (playing) {
+      player = { x: 0, y: 0, xVel: 0, yVel: 0, xAcc: 0, yAcc: -10 };
+      loop = requestAnimationFrame(gameLoop);
+    }
+    return () => cancelAnimationFrame(loop);
   }, [draw, playing, move]);
 
   // sketches screen with given mouse data
