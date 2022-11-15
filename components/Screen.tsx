@@ -80,6 +80,16 @@ export default function Screen() {
     // set times
     let lastTime: number;
     let deltaTime: number;
+    // define game loop
+    function gameLoop(time: number) {
+      // update time
+      if (lastTime !== undefined) deltaTime = time - lastTime;
+      lastTime = time;
+      // run loop
+      draw();
+      if (deltaTime !== undefined) move(deltaTime);
+      loop = requestAnimationFrame(gameLoop);
+    }
   }, [draw, playing, move]);
 
   // sketches screen with given mouse data
