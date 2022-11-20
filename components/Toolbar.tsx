@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import { Dispatch, useRef } from 'react';
 import styles from '../styles/components/Toolbar.module.scss';
 import IconButton from './IconButton';
 
@@ -9,8 +9,14 @@ type Props = {
   setSelectedIndex: Dispatch<number>;
 };
 
+const maxVertical = 4;
+const maxHorizontal = 16;
+
 export default function Toolbar(props: Props) {
   const { playing, setPlaying, selectedIndex, setSelectedIndex } = props;
+
+  const verticalRef = useRef<HTMLSelectElement>(null);
+  const horizontalRef = useRef<HTMLSelectElement>(null);
 
   // deselects pressed button
   function blurButton() {
@@ -41,10 +47,15 @@ export default function Toolbar(props: Props) {
         onClick={() => setSelectedIndex(-1)}
         icon="eraser"
       />
+      <IconButton
+        onClick={() => { }}
+        icon="save"
+      />
       {
         (!playing && selectedIndex === -1) &&
         <div className={styles.selectArrow} />
       }
+      <span style={{ flexGrow: 1 }} />
       <select ref={verticalRef}>
         {Array(maxVertical).fill(0).map((v, i) =>
           <option key={i} value={i + 1}>↕ {i + 1}</option>
