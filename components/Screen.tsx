@@ -1,24 +1,33 @@
-import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import styles from '../styles/components/Screen.module.scss';
 import getCanvasContext from '../util/getCanvasContext';
 import { getMouseIndex } from '../util/mouse';
 import { screenPixels, screenTiles, tilePixels } from '../util/units';
+import IconButton from './IconButton';
 import Tilebar from './Tilebar';
 import Toolbar from './Toolbar';
 
+let container: HTMLDivElement;
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 let sketching = false;
 let tilesImage: HTMLImageElement;
 const keys: { [key: string]: boolean } = {};
+let player = { x: 0, y: 0, xVel: 0, yVel: 0, xAcc: 0, yAcc: -10 };
+
+let defaultTiles = Array(screenTiles ** 2).fill(-1);
+defaultTiles[screenTiles ** 2 - 1] = 0;
+defaultTiles[screenTiles ** 2 - screenTiles - 1] = 0;
+defaultTiles[screenTiles ** 2 - screenTiles] = 0;
+defaultTiles[screenTiles ** 2 - screenTiles * 2] = 0;
 
 export default function Screen() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [hoverIndex, setHoverIndex] = useState(-1);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [tiles, setTiles] = useState(Array(screenTiles ** 2).fill(-1));
-  const [loaded, setLoaded] = useState(false);
+  const [tiles, setTiles] = useState(defaultTiles);
   const [playing, setPlaying] = useState(false);
 
   // initialize images
