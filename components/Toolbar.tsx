@@ -45,6 +45,16 @@ export default function Toolbar(props: Props) {
         (!playing && selectedIndex === -1) &&
         <div className={styles.selectArrow} />
       }
+      <select ref={verticalRef}>
+        {Array(maxVertical).fill(0).map((v, i) =>
+          <option key={i} value={i + 1}>↕ {i + 1}</option>
+        )}
+      </select>
+      <select ref={horizontalRef}>
+        {Array(maxHorizontal).fill(0).map((v, i) =>
+          <option key={i} value={i + 1}>↔ {i + 1}</option>
+        )}
+      </select>
     </div>
   );
 }
