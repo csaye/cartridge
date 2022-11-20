@@ -165,6 +165,10 @@ export default function Screen() {
         setSelectedIndex={setSelectedIndex}
       />
       <div className={styles.view} ref={containerRef}>
+        <IconButton icon="arrow-up" onClick={() => { }} />
+        <IconButton icon="arrow-left" onClick={() => { }} />
+        <IconButton icon="arrow-down" onClick={() => { }} />
+        <IconButton icon="arrow-right" onClick={() => { }} />
         <canvas
           className={
             playing ? undefined :
