@@ -39,6 +39,8 @@ export default function Screen() {
 
   // get canvas context on start
   useEffect(() => {
+    if (!containerRef.current) throw 'no container';
+    container = containerRef.current;
     [canvas, ctx] = getCanvasContext(canvasRef);
     ctx.imageSmoothingEnabled = false;
   }, []);
@@ -62,6 +64,9 @@ export default function Screen() {
   const draw = useCallback(() => {
     // clear screen
     ctx.clearRect(0, 0, screenPixels, screenPixels);
+    ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+    ctx.fillRect(0, 0, tilePixels, screenPixels);
+    ctx.fillRect(screenPixels - tilePixels, 0, tilePixels, screenPixels);
     // for each tile
     for (let x = 0; x < screenTiles; x++) {
       for (let y = 0; y < screenTiles; y++) {
@@ -121,7 +126,7 @@ export default function Screen() {
     // return if playing
     if (playing) return;
     // get mouse index
-    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles);
+    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles, container);
     // update tiles
     const newTiles = tiles.slice();
     newTiles[mouseIndex] = selectedIndex;
@@ -141,7 +146,7 @@ export default function Screen() {
     // sketch at mouse position
     if (sketching) sketch(e);
     // set hover index
-    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles);
+    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles, container);
     setHoverIndex(mouseIndex);
   }
 
