@@ -164,19 +164,21 @@ export default function Screen() {
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
       />
-      <canvas
-        className={
-          playing ? undefined :
-            selectedIndex === -1 ? styles.eraser : styles.paintbrush
-        }
-        ref={canvasRef}
-        width={screenPixels}
-        height={screenPixels}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseLeave}
-      />
+      <div className={styles.view} ref={containerRef}>
+        <canvas
+          className={
+            playing ? undefined :
+              selectedIndex === -1 ? styles.eraser : styles.paintbrush
+          }
+          ref={canvasRef}
+          width={screenPixels}
+          height={screenPixels}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseLeave}
+        />
+      </div>
       <Tilebar
         playing={playing}
         selectedIndex={selectedIndex}
