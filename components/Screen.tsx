@@ -271,6 +271,13 @@ export default function Screen() {
   useEffect(() => {
     // return if no changes
     if (oldMapWidth == mapWidth && oldMapHeight == mapHeight) return;
+    // height increased
+    if (mapHeight > oldMapHeight) {
+      const mapsToAdd = (mapHeight - oldMapHeight) * mapWidth;
+      const newMaps = Array(mapsToAdd).fill(defaultTiles);
+      const newTilemaps = tilemaps.concat(newMaps);
+      setTilemaps(newTilemaps);
+    }
     // update old dimensions
     oldMapWidth = mapWidth;
     oldMapHeight = mapHeight;
