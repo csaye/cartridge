@@ -104,6 +104,15 @@ export default function Screen() {
 
   // moves player based on given ms delta
   const move = useCallback((deltaTime: number) => {
+    // update velocity
+    player.yVel += (deltaTime / 900) * player.yAcc;
+    player.yVel = Math.max(-10, Math.min(player.yVel, 10));
+    player.xVel += (deltaTime / 900) * player.xAcc;
+    player.xVel = Math.max(-5, Math.min(player.xVel, 5));
+    // update position
+    let grounded = player.y >= screenPixels - tilePixels;
+    player.y += (deltaTime / 25) * -player.yVel;
+    player.x += (deltaTime / 25) * player.xVel;
     // handle keys
     if (keys['Space'] && grounded) player.yVel = 8.7;
     if (keys['ArrowRight'] && keys['ArrowLeft']) player.xAcc = 0;
