@@ -232,11 +232,9 @@ export default function Screen() {
     // get mouse index
     const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles, container);
     // update tiles
-    const newTilemaps = tilemaps.slice();
-    const newTiles = newTilemaps[mapIndex].slice();
+    const newTiles = tiles.slice();
     newTiles[mouseIndex] = selectedIndex;
-    newTilemaps[mapIndex] = newTiles;
-    setTilemaps(newTilemaps);
+    setTiles(newTiles);
   }
 
   // called on mouse down
@@ -267,48 +265,6 @@ export default function Screen() {
     setHoverIndex(-1);
   }
 
-  // resize map on dimension change
-  useEffect(() => {
-    // return if no changes
-    if (oldMapWidth == mapWidth && oldMapHeight == mapHeight) return;
-    // height increased
-    if (mapHeight > oldMapHeight) {
-      const mapsToAdd = (mapHeight - oldMapHeight) * mapWidth;
-      const newMaps = Array(mapsToAdd).fill(defaultTiles);
-      const newTilemaps = tilemaps.concat(newMaps);
-      setTilemaps(newTilemaps);
-    }
-    // height decreased
-    if (mapHeight < oldMapHeight) {
-      const mapsToRemove = oldMapHeight - mapHeight;
-      const lastIndex = mapWidth * oldMapHeight - mapsToRemove * mapWidth;
-      const newTilemaps = tilemaps.slice(0, lastIndex);
-      setTilemaps(newTilemaps);
-    }
-    // width increased
-    if (mapWidth > oldMapWidth) {
-      const newMaps = Array(mapWidth - oldMapWidth).fill(defaultTiles);
-      const newTilemaps = tilemaps.slice();
-      for (let i = oldMapWidth * mapHeight; i > 0; i -= oldMapWidth) {
-        newTilemaps.splice(i, 0, ...newMaps);
-      }
-      setTilemaps(newTilemaps);
-    }
-    // width decreased
-    if (mapWidth < oldMapWidth) {
-      const mapsToRemove = oldMapWidth - mapWidth;
-      const newTilemaps = tilemaps.slice();
-      const startingIndex = oldMapWidth * mapHeight - mapsToRemove;
-      for (let i = startingIndex; i > 0; i -= oldMapWidth) {
-        newTilemaps.splice(i, mapsToRemove);
-      }
-      setTilemaps(newTilemaps);
-    }
-    // update old dimensions
-    oldMapWidth = mapWidth;
-    oldMapHeight = mapHeight;
-  }, [mapWidth, mapHeight, tilemaps]);
-
   return (
     <div className={styles.container}>
       <Toolbar
@@ -316,14 +272,6 @@ export default function Screen() {
         setPlaying={setPlaying}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
-        mapWidth={mapWidth}
-        setMapWidth={setMapWidth}
-        mapHeight={mapHeight}
-        setMapHeight={setMapHeight}
-        mapX={mapX}
-        setMapX={setMapX}
-        mapY={mapY}
-        setMapY={setMapY}
       />
       <div className={styles.view} ref={containerRef}>
         {
