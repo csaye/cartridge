@@ -157,6 +157,20 @@ export default function Screen() {
       player.x = screenPixels - tilePixels;
       player.xVel = 0;
     } else {
+      // check right collision
+      const playerXLeft = Math.floor(player.x / tilePixels);
+      const playerXRight = playerXLeft + 1;
+      const playerYTop = Math.floor((player.y + 1) / tilePixels);
+      const playerYBottom = Math.floor((player.y + tilePixels - 1) / tilePixels);
+      // collide with tile at position
+      const rightTopTile = playerYTop * screenTiles + playerXRight;
+      const rightBottomTile = playerYBottom * screenTiles + playerXRight;
+      if (tiles[rightTopTile] !== -1 || tiles[rightBottomTile] !== -1) {
+        // if player moving right
+        if (player.xVel > 0) {
+          player.x = playerXLeft * tilePixels;
+          player.xVel = 0;
+        }
     }
     // handle keys
     if (keys['Space'] && grounded) player.yVel = 8.7;
