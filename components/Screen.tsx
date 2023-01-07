@@ -267,6 +267,15 @@ export default function Screen() {
     setHoverIndex(-1);
   }
 
+  // resize map on dimension change
+  useEffect(() => {
+    // return if no changes
+    if (oldMapWidth == mapWidth && oldMapHeight == mapHeight) return;
+    // update old dimensions
+    oldMapWidth = mapWidth;
+    oldMapHeight = mapHeight;
+  }, [mapWidth, mapHeight, tilemaps]);
+
   return (
     <div className={styles.container}>
       <Toolbar
