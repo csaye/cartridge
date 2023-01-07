@@ -175,10 +175,46 @@ export default function Screen() {
         setSelectedIndex={setSelectedIndex}
       />
       <div className={styles.view} ref={containerRef}>
-        <IconButton icon="arrow-up" onClick={() => { }} />
-        <IconButton icon="arrow-left" onClick={() => { }} />
-        <IconButton icon="arrow-down" onClick={() => { }} />
-        <IconButton icon="arrow-right" onClick={() => { }} />
+        {
+          !playing &&
+          <>
+            {
+              mapY < mapHeight - 1 &&
+              <IconButton
+                icon="arrow-up"
+                onClick={() => setMapY(mapY + 1)}
+                className={styles.up}
+              />
+            }
+            {
+              mapX > 0 &&
+              <IconButton
+                icon="arrow-left"
+                onClick={() => setMapX(mapX - 1)}
+                className={styles.left}
+              />
+            }
+            {
+              mapY > 0 &&
+              <IconButton
+                icon="arrow-down"
+                onClick={() => setMapY(mapY - 1)}
+                className={styles.down}
+              />
+            }
+            {
+              mapX < mapWidth - 1 &&
+              <IconButton
+                icon="arrow-right"
+                onClick={() => setMapX(mapX + 1)}
+                className={styles.right}
+              />
+            }
+            <div className={styles.coords}>
+              <span>({mapX + 1}, {mapY + 1})</span>
+            </div>
+          </>
+        }
         <canvas
           className={
             playing ? undefined :
