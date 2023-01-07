@@ -102,6 +102,16 @@ export default function Screen() {
     draw();
   }, [draw]);
 
+  // moves player based on given ms delta
+  const move = useCallback((deltaTime: number) => {
+    // handle keys
+    if (keys['Space'] && grounded) player.yVel = 8.7;
+    if (keys['ArrowRight'] && keys['ArrowLeft']) player.xAcc = 0;
+    else if (keys['ArrowRight']) player.xAcc = 5;
+    else if (keys['ArrowLeft']) player.xAcc = -5;
+    else player.xAcc = 0;
+  }, [tiles]);
+
   // set up game loop
   useEffect(() => {
     // set times
