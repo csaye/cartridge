@@ -278,6 +278,13 @@ export default function Screen() {
       const newTilemaps = tilemaps.concat(newMaps);
       setTilemaps(newTilemaps);
     }
+    // height decreased
+    if (mapHeight < oldMapHeight) {
+      const mapsToRemove = oldMapHeight - mapHeight;
+      const lastIndex = mapWidth * oldMapHeight - mapsToRemove * mapWidth;
+      const newTilemaps = tilemaps.slice(0, lastIndex);
+      setTilemaps(newTilemaps);
+    }
     // update old dimensions
     oldMapWidth = mapWidth;
     oldMapHeight = mapHeight;
