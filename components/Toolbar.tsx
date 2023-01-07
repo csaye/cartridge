@@ -1,4 +1,4 @@
-import { Dispatch, useRef } from 'react';
+import { Dispatch } from 'react';
 import styles from '../styles/components/Toolbar.module.scss';
 import IconButton from './IconButton';
 
@@ -7,16 +7,25 @@ type Props = {
   setPlaying: Dispatch<boolean>;
   selectedIndex: number;
   setSelectedIndex: Dispatch<number>;
+  mapWidth: number;
+  setMapWidth: Dispatch<number>;
+  mapHeight: number;
+  setMapHeight: Dispatch<number>;
+  mapX: number;
+  setMapX: Dispatch<number>;
+  mapY: number;
+  setMapY: Dispatch<number>;
 };
 
 const maxVertical = 4;
 const maxHorizontal = 16;
 
 export default function Toolbar(props: Props) {
-  const { playing, setPlaying, selectedIndex, setSelectedIndex } = props;
-
-  const verticalRef = useRef<HTMLSelectElement>(null);
-  const horizontalRef = useRef<HTMLSelectElement>(null);
+  const {
+    playing, setPlaying, selectedIndex, setSelectedIndex,
+    mapWidth, setMapWidth, mapHeight, setMapHeight,
+    mapX, setMapX, mapY, setMapY
+  } = props;
 
   // deselects pressed button
   function blurButton() {
