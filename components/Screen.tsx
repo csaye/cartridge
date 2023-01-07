@@ -15,11 +15,12 @@ let tilesImage: HTMLImageElement;
 const keys: { [key: string]: boolean } = {};
 let player = { x: 0, y: 0, xVel: 0, yVel: 0, xAcc: 0, yAcc: -10 };
 
-let defaultTiles = Array(screenTiles ** 2).fill(-1);
-defaultTiles[screenTiles ** 2 - 1] = 0;
-defaultTiles[screenTiles ** 2 - screenTiles - 1] = 0;
-defaultTiles[screenTiles ** 2 - screenTiles] = 0;
-defaultTiles[screenTiles ** 2 - screenTiles * 2] = 0;
+// set default tilemaps
+const defaultTiles = Array(screenTiles ** 2).fill(-1);
+const defaultTilemaps = [defaultTiles];
+
+let oldMapWidth: number;
+let oldMapHeight: number;
 
 export default function Screen() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,14 +28,21 @@ export default function Screen() {
 
   const [hoverIndex, setHoverIndex] = useState(-1);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [tiles, setTiles] = useState(defaultTiles);
+  const [tilemaps, setTilemaps] = useState(defaultTilemaps);
   const [playing, setPlaying] = useState(false);
+
+  const [mapWidth, setMapWidth] = useState(1);
+  const [mapHeight, setMapHeight] = useState(1);
+  const [mapX, setMapX] = useState(0);
+  const [mapY, setMapY] = useState(0);
+
+  const mapIndex = mapY * mapWidth + mapX;
+  const tiles = tilemaps[mapIndex];
 
   // initialize images
   useEffect(() => {
     tilesImage = new Image();
     tilesImage.src = '/img/sprites/tiles.png';
-    tilesImage.onload = () => setLoaded(true);
   }, []);
 
   // get canvas context on start
@@ -64,9 +72,6 @@ export default function Screen() {
   const draw = useCallback(() => {
     // clear screen
     ctx.clearRect(0, 0, screenPixels, screenPixels);
-    ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
-    ctx.fillRect(0, 0, tilePixels, screenPixels);
-    ctx.fillRect(screenPixels - tilePixels, 0, tilePixels, screenPixels);
     // for each tile
     for (let x = 0; x < screenTiles; x++) {
       for (let y = 0; y < screenTiles; y++) {
