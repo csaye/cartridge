@@ -135,6 +135,19 @@ export default function Screen() {
           player.yVel = 0;
           grounded = true;
         }
+      } else {
+        // check top collision
+        const leftTopTile = playerYTop * screenTiles + playerXLeft;
+        const rightTopTile = playerYTop * screenTiles + playerXRight;
+        // collide with tile at position
+        if (tiles[leftTopTile] !== -1 || tiles[rightTopTile] !== -1) {
+          // if player moving up
+          if (player.yVel > 0) {
+            player.y = (playerYTop + 1) * tilePixels;
+            player.yVel = 0;
+          }
+        }
+      }
     }
     player.x += (deltaTime / 25) * player.xVel;
     if (player.x <= 0) {
