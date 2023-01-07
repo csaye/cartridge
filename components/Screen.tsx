@@ -112,7 +112,23 @@ export default function Screen() {
     // update position
     let grounded = player.y >= screenPixels - tilePixels;
     player.y += (deltaTime / 25) * -player.yVel;
+    if (player.y <= 0) {
+      player.y = 0;
+      player.yVel = 0;
+    } else if (player.y >= screenPixels - tilePixels) {
+      player.y = screenPixels - tilePixels;
+      player.yVel = 0;
+    } else {
+    }
     player.x += (deltaTime / 25) * player.xVel;
+    if (player.x <= 0) {
+      player.x = 0;
+      player.xVel = 0;
+    } else if (player.x >= screenPixels - tilePixels) {
+      player.x = screenPixels - tilePixels;
+      player.xVel = 0;
+    } else {
+    }
     // handle keys
     if (keys['Space'] && grounded) player.yVel = 8.7;
     if (keys['ArrowRight'] && keys['ArrowLeft']) player.xAcc = 0;
