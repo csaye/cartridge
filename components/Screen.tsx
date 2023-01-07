@@ -285,6 +285,15 @@ export default function Screen() {
       const newTilemaps = tilemaps.slice(0, lastIndex);
       setTilemaps(newTilemaps);
     }
+    // width increased
+    if (mapWidth > oldMapWidth) {
+      const newMaps = Array(mapWidth - oldMapWidth).fill(defaultTiles);
+      const newTilemaps = tilemaps.slice();
+      for (let i = oldMapWidth * mapHeight; i > 0; i -= oldMapWidth) {
+        newTilemaps.splice(i, 0, ...newMaps);
+      }
+      setTilemaps(newTilemaps);
+    }
     // update old dimensions
     oldMapWidth = mapWidth;
     oldMapHeight = mapHeight;
