@@ -294,6 +294,16 @@ export default function Screen() {
       }
       setTilemaps(newTilemaps);
     }
+    // width decreased
+    if (mapWidth < oldMapWidth) {
+      const mapsToRemove = oldMapWidth - mapWidth;
+      const newTilemaps = tilemaps.slice();
+      const startingIndex = oldMapWidth * mapHeight - mapsToRemove;
+      for (let i = startingIndex; i > 0; i -= oldMapWidth) {
+        newTilemaps.splice(i, mapsToRemove);
+      }
+      setTilemaps(newTilemaps);
+    }
     // update old dimensions
     oldMapWidth = mapWidth;
     oldMapHeight = mapHeight;
