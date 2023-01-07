@@ -4,14 +4,17 @@ import styles from '../styles/components/IconButton.module.scss';
 type Props = {
   onClick: () => void;
   icon: string;
+  className?: string;
 };
 
 export default function IconButton(props: Props) {
-  const { onClick, icon } = props;
+  const { onClick, icon, className } = props;
 
   return (
     <button
-      className={styles.container}
+      className={
+        className ? `${styles.container} ${className}` : styles.container
+      }
       onClick={onClick}
     >
       <Image
