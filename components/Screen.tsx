@@ -272,6 +272,14 @@ export default function Screen() {
         setPlaying={setPlaying}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
+        mapWidth={mapWidth}
+        setMapWidth={setMapWidth}
+        mapHeight={mapHeight}
+        setMapHeight={setMapHeight}
+        mapX={mapX}
+        setMapX={setMapX}
+        mapY={mapY}
+        setMapY={setMapY}
       />
       <div className={styles.view} ref={containerRef}>
         {
