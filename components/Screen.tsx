@@ -110,6 +110,14 @@ export default function Screen() {
     else if (keys['ArrowRight']) player.xAcc = 5;
     else if (keys['ArrowLeft']) player.xAcc = -5;
     else player.xAcc = 0;
+    // apply friction
+    const movingAgainst = grounded && ((player.xAcc > 0 && player.xVel < 0)
+      || (player.xAcc < 0 && player.xVel > 0));
+    if (player.xAcc === 0 || movingAgainst) {
+      const damping = grounded ? 0.75 : 0.1;
+      player.xVel = player.xVel / (1 + damping * (deltaTime / 100));
+      if (Math.abs(player.xVel) < 0.05) player.xVel = 0;
+    }
   }, [tiles]);
 
   // set up game loop
