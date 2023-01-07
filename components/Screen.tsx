@@ -232,9 +232,11 @@ export default function Screen() {
     // get mouse index
     const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles, container);
     // update tiles
-    const newTiles = tiles.slice();
+    const newTilemaps = tilemaps.slice();
+    const newTiles = newTilemaps[mapIndex].slice();
     newTiles[mouseIndex] = selectedIndex;
-    setTiles(newTiles);
+    newTilemaps[mapIndex] = newTiles;
+    setTilemaps(newTilemaps);
   }
 
   // called on mouse down
