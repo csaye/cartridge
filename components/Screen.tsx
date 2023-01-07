@@ -119,6 +119,22 @@ export default function Screen() {
       player.y = screenPixels - tilePixels;
       player.yVel = 0;
     } else {
+      // check bottom collision
+      const playerXLeft = Math.floor((player.x + 1) / tilePixels);
+      const playerXRight = Math.floor((player.x + tilePixels - 1) / tilePixels);
+      const playerYTop = Math.floor(player.y / tilePixels);
+      const playerYBottom = playerYTop + 1;
+      // collide with tile at position
+      const leftBottomTile = playerYBottom * screenTiles + playerXLeft;
+      const rightBottomTile = playerYBottom * screenTiles + playerXRight;
+      // get tiles
+      if (tiles[leftBottomTile] !== -1 || tiles[rightBottomTile] !== -1) {
+        // if player moving down
+        if (player.yVel < 0) {
+          player.y = playerYTop * tilePixels;
+          player.yVel = 0;
+          grounded = true;
+        }
     }
     player.x += (deltaTime / 25) * player.xVel;
     if (player.x <= 0) {
