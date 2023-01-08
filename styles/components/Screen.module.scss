@@ -7,10 +7,25 @@
     position: relative;
     padding: 32px;
       }
+
+    >.coords {
+      color: #fff;
+      position: absolute;
+      right: 32px;
+      bottom: 10px;
     }
 
-    &.paintbrush {
-      cursor: url('/img/cursors/paintbrush.svg') 12 36, default;
+    >canvas {
+      background: #fff;
+      display: block;
+
+      &.eraser {
+        cursor: url('/img/cursors/eraser.svg') 12 36, default;
+      }
+
+      &.paintbrush {
+        cursor: url('/img/cursors/paintbrush.svg') 12 36, default;
+      }
     }
   }
 }
