@@ -54,6 +54,16 @@ export default function Screen() {
     ctx.imageSmoothingEnabled = false;
   }, []);
 
+  // returns tile index for given mouse event
+  function getTileIndex(e: MouseEvent) {
+    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles, container);
+    const mouseX = mouseIndex % screenTiles;
+    const mouseY = Math.floor(mouseIndex / screenTiles);
+    const tileX = mapX * screenTiles + mouseX;
+    const tileY = (mapHeight - 1 - mapY) * screenTiles + mouseY;
+    return tileY * tilesWidth + tileX;
+  }
+
   // listen for keys
   useEffect(() => {
     // key listeners
@@ -247,8 +257,8 @@ export default function Screen() {
   function sketch(e: MouseEvent) {
     // return if playing
     if (playing) return;
-    // get mouse index
-    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles, container);
+    // get tile index
+    const tileIndex = getTileIndex(e);
     // update tiles
     const newTilemaps = tilemaps.slice();
     const newTiles = newTilemaps[mapIndex].slice();
@@ -270,8 +280,8 @@ export default function Screen() {
     // sketch at mouse position
     if (sketching) sketch(e);
     // set hover index
-    const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles, container);
-    setHoverIndex(mouseIndex);
+    const tileIndex = getTileIndex(e);
+    setHoverIndex(tileIndex);
   }
 
   // called on mouse up
