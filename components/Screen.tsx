@@ -94,36 +94,16 @@ export default function Screen() {
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup', onKeyUp);
     }
-  }, []);
+  }, [mapHeight, mapWidth, mapX, mapY, playing]);
 
   // draws screen
   const draw = useCallback(() => {
     // clear screen
     ctx.clearRect(0, 0, screenPixels, screenPixels);
-    // for each tile
-    for (let x = 0; x < screenTiles; x++) {
-      for (let y = 0; y < screenTiles; y++) {
-        // get tile
-        const tileIndex = y * screenTiles + x;
-        const tile = tiles[tileIndex];
-        if (tile !== -1) {
-          ctx.drawImage(
-            tilesImage,
-            tile * 8, 0, 8, 8,
-            x * tilePixels, y * tilePixels, tilePixels, tilePixels
-          );
         }
-        // draw hover
-        if (tileIndex === hoverIndex) {
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-          ctx.fillRect(x * tilePixels, y * tilePixels, tilePixels, tilePixels);
         }
       }
     }
-    // draw player
-    ctx.fillStyle = '#990000';
-    ctx.fillRect(player.x, player.y, tilePixels, tilePixels);
-  }, [hoverIndex, tiles]);
 
   // draw on data update
   useEffect(() => {
