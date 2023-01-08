@@ -307,10 +307,9 @@ export default function Screen() {
     }
     // height decreased
     if (mapHeight < oldMapHeight) {
-      const mapsToRemove = oldMapHeight - mapHeight;
-      const lastIndex = mapWidth * oldMapHeight - mapsToRemove * mapWidth;
-      const newTilemaps = tilemaps.slice(0, lastIndex);
-      setTilemaps(newTilemaps);
+      const mapsToRemove = (oldMapHeight - mapHeight) * mapWidth;
+      const lastTileIndex = mapsToRemove * mapTiles;
+      setTiles(tiles.slice(lastTileIndex));
     }
     // width increased
     if (mapWidth > oldMapWidth) {
