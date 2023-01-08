@@ -6,7 +6,56 @@
   >.view {
     position: relative;
     padding: 32px;
+
+    >button {
+      position: absolute;
+      background: transparent;
+      filter: invert(100%);
+
+      &:hover {
+        filter: invert(80%);
       }
+
+      &.up {
+        left: 50%;
+        top: -4px;
+        transform: translateX(-50%);
+
+        &:active {
+          transform: translateX(-50%) scale(0.9);
+        }
+      }
+
+      &.left {
+        top: 50%;
+        left: -4px;
+        transform: translateY(-50%);
+
+        &:active {
+          transform: translateY(-50%) scale(0.9);
+        }
+      }
+
+      &.down {
+        left: 50%;
+        bottom: -4px;
+        transform: translateX(-50%);
+
+        &:active {
+          transform: translateX(-50%) scale(0.9);
+        }
+      }
+
+      &.right {
+        top: 50%;
+        right: -4px;
+        transform: translateY(-50%);
+
+        &:active {
+          transform: translateY(-50%) scale(0.9);
+        }
+      }
+    }
 
     >.coords {
       color: #fff;
