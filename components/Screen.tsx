@@ -276,7 +276,7 @@ export default function Screen() {
       player.xVel = player.xVel / (1 + damping * (deltaTime / 100));
       if (Math.abs(player.xVel) < 0.05) player.xVel = 0;
     }
-  }, [tiles]);
+  }, [mapWidth, mapHeight, tiles, tilesWidth]);
 
   // set up game loop
   useEffect(() => {
@@ -309,11 +309,9 @@ export default function Screen() {
     // get tile index
     const tileIndex = getTileIndex(e);
     // update tiles
-    const newTilemaps = tilemaps.slice();
-    const newTiles = newTilemaps[mapIndex].slice();
-    newTiles[mouseIndex] = selectedIndex;
-    newTilemaps[mapIndex] = newTiles;
-    setTilemaps(newTilemaps);
+    const newTiles = tiles.slice();
+    newTiles[tileIndex] = selectedIndex;
+    setTiles(newTiles);
   }
 
   // called on mouse down
