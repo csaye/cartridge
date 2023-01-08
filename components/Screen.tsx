@@ -12,12 +12,13 @@ let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 let sketching = false;
 let tilesImage: HTMLImageElement;
-const keys: { [key: string]: boolean } = {};
+let keys: { [key: string]: boolean } = {};
 let player = { x: 0, y: 0, xVel: 0, yVel: 0, xAcc: 0, yAcc: -10 };
 
+const mapTiles = screenTiles * screenTiles;
+
 // set default tilemaps
-const defaultTiles = Array(screenTiles ** 2).fill(-1);
-const defaultTilemaps = [defaultTiles];
+const defaultTiles = Array(mapTiles).fill(-1);
 
 let oldMapWidth: number;
 let oldMapHeight: number;
@@ -28,7 +29,7 @@ export default function Screen() {
 
   const [hoverIndex, setHoverIndex] = useState(-1);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [tilemaps, setTilemaps] = useState(defaultTilemaps);
+  const [tiles, setTiles] = useState(defaultTiles);
   const [playing, setPlaying] = useState(false);
 
   const [mapWidth, setMapWidth] = useState(1);
@@ -36,8 +37,8 @@ export default function Screen() {
   const [mapX, setMapX] = useState(0);
   const [mapY, setMapY] = useState(0);
 
-  const mapIndex = mapY * mapWidth + mapX;
-  const tiles = tilemaps[mapIndex];
+  const tilesWidth = mapWidth * screenTiles;
+  const tilesHeight = mapHeight * screenTiles;
 
   // initialize images
   useEffect(() => {
