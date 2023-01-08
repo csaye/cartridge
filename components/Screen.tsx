@@ -183,13 +183,15 @@ export default function Screen() {
     player.xVel += (deltaTime / 900) * player.xAcc;
     player.xVel = Math.max(-5, Math.min(player.xVel, 5));
     // update position
-    let grounded = player.y >= screenPixels - tilePixels;
+    let grounded = player.y >= mapHeight * screenPixels - tilePixels;
+    player.x += (deltaTime / 25) * player.xVel;
     player.y += (deltaTime / 25) * -player.yVel;
+    // handle y movement
     if (player.y <= 0) {
       player.y = 0;
       player.yVel = 0;
-    } else if (player.y >= screenPixels - tilePixels) {
-      player.y = screenPixels - tilePixels;
+    } else if (player.y >= mapHeight * screenPixels - tilePixels) {
+      player.y = mapHeight * screenPixels - tilePixels;
       player.yVel = 0;
     } else {
       // check bottom collision
@@ -198,8 +200,8 @@ export default function Screen() {
       const playerYTop = Math.floor(player.y / tilePixels);
       const playerYBottom = playerYTop + 1;
       // collide with tile at position
-      const leftBottomTile = playerYBottom * screenTiles + playerXLeft;
-      const rightBottomTile = playerYBottom * screenTiles + playerXRight;
+      const leftBottomTile = playerYBottom * tilesWidth + playerXLeft;
+      const rightBottomTile = playerYBottom * tilesWidth + playerXRight;
       // get tiles
       if (tiles[leftBottomTile] !== -1 || tiles[rightBottomTile] !== -1) {
         // if player moving down
@@ -210,8 +212,8 @@ export default function Screen() {
         }
       } else {
         // check top collision
-        const leftTopTile = playerYTop * screenTiles + playerXLeft;
-        const rightTopTile = playerYTop * screenTiles + playerXRight;
+        const leftTopTile = playerYTop * tilesWidth + playerXLeft;
+        const rightTopTile = playerYTop * tilesWidth + playerXRight;
         // collide with tile at position
         if (tiles[leftTopTile] !== -1 || tiles[rightTopTile] !== -1) {
           // if player moving up
