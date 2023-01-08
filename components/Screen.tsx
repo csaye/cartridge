@@ -224,12 +224,12 @@ export default function Screen() {
         }
       }
     }
-    player.x += (deltaTime / 25) * player.xVel;
+    // handle x movement
     if (player.x <= 0) {
       player.x = 0;
       player.xVel = 0;
-    } else if (player.x >= screenPixels - tilePixels) {
-      player.x = screenPixels - tilePixels;
+    } else if (player.x >= mapWidth * screenPixels - tilePixels) {
+      player.x = mapWidth * screenPixels - tilePixels;
       player.xVel = 0;
     } else {
       // check right collision
@@ -238,8 +238,8 @@ export default function Screen() {
       const playerYTop = Math.floor((player.y + 1) / tilePixels);
       const playerYBottom = Math.floor((player.y + tilePixels - 1) / tilePixels);
       // collide with tile at position
-      const rightTopTile = playerYTop * screenTiles + playerXRight;
-      const rightBottomTile = playerYBottom * screenTiles + playerXRight;
+      const rightTopTile = playerYTop * tilesWidth + playerXRight;
+      const rightBottomTile = playerYBottom * tilesWidth + playerXRight;
       if (tiles[rightTopTile] !== -1 || tiles[rightBottomTile] !== -1) {
         // if player moving right
         if (player.xVel > 0) {
@@ -248,8 +248,8 @@ export default function Screen() {
         }
       } else {
         // check left collision
-        const leftTopTile = playerYTop * screenTiles + playerXLeft;
-        const leftBottomTile = playerYBottom * screenTiles + playerXLeft;
+        const leftTopTile = playerYTop * tilesWidth + playerXLeft;
+        const leftBottomTile = playerYBottom * tilesWidth + playerXLeft;
         // collide with tile at position
         if (tiles[leftTopTile] !== -1 || tiles[leftBottomTile] !== -1) {
           // if player moving left
