@@ -313,12 +313,14 @@ export default function Screen() {
     }
     // width increased
     if (mapWidth > oldMapWidth) {
-      const newMaps = Array(mapWidth - oldMapWidth).fill(defaultTiles);
-      const newTilemaps = tilemaps.slice();
-      for (let i = oldMapWidth * mapHeight; i > 0; i -= oldMapWidth) {
-        newTilemaps.splice(i, 0, ...newMaps);
+      const tilesToAdd = (mapWidth - oldMapWidth) * screenTiles;
+      const newTiles = tiles.slice();
+      const oldTilesWidth = oldMapWidth * screenTiles;
+      const startIndex = oldTilesWidth * tilesHeight;
+      for (let i = startIndex; i > 0; i -= oldTilesWidth) {
+        newTiles.splice(i, 0, ...Array(tilesToAdd).fill(-1));
       }
-      setTilemaps(newTilemaps);
+      setTiles(newTiles);
     }
     // width decreased
     if (mapWidth < oldMapWidth) {
