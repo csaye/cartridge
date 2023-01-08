@@ -324,13 +324,14 @@ export default function Screen() {
     }
     // width decreased
     if (mapWidth < oldMapWidth) {
-      const mapsToRemove = oldMapWidth - mapWidth;
-      const newTilemaps = tilemaps.slice();
-      const startingIndex = oldMapWidth * mapHeight - mapsToRemove;
-      for (let i = startingIndex; i > 0; i -= oldMapWidth) {
-        newTilemaps.splice(i, mapsToRemove);
+      const tilesToRemove = (oldMapWidth - mapWidth) * screenTiles;
+      const newTiles = tiles.slice();
+      const oldTilesWidth = oldMapWidth * screenTiles;
+      const startIndex = oldTilesWidth * tilesHeight - tilesToRemove;
+      for (let i = startIndex; i > 0; i -= oldTilesWidth) {
+        newTiles.splice(i, tilesToRemove);
       }
-      setTilemaps(newTilemaps);
+      setTiles(newTiles);
     }
     // update old dimensions
     oldMapWidth = mapWidth;
