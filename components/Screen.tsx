@@ -56,7 +56,24 @@ export default function Screen() {
   // listen for keys
   useEffect(() => {
     // key listeners
-    const onKeyDown = (e: KeyboardEvent) => keys[e.code] = true;
+    const onKeyDown = (e: KeyboardEvent) => {
+      keys[e.code] = true;
+      // handle map switches
+      if (!playing) {
+        if (['KeyW', 'ArrowUp'].includes(e.code)) {
+          if (mapY < mapHeight - 1) setMapY(mapY + 1);
+        }
+        if (['KeyA', 'ArrowLeft'].includes(e.code)) {
+          if (mapX > 0) setMapX(mapX - 1);
+        }
+        if (['KeyS', 'ArrowDown'].includes(e.code)) {
+          if (mapY > 0) setMapY(mapY - 1);
+        }
+        if (['KeyD', 'ArrowRight'].includes(e.code)) {
+          if (mapX < mapWidth - 1) setMapX(mapX + 1);
+        }
+      }
+    }
     const onKeyUp = (e: KeyboardEvent) => delete keys[e.code];
     // add key listeners
     window.addEventListener('keydown', onKeyDown);
