@@ -138,9 +138,37 @@ export default function Screen() {
         player.x - xOffset, player.y - yOffset,
         tilePixels, tilePixels
       );
+    } else { // editing draw
+      // for each tile
+      for (let x = 0; x < screenTiles; x++) {
+        for (let y = 0; y < screenTiles; y++) {
+          // calculate tile position
+          const tileX = mapX * screenTiles + x;
+          const tileY = (mapHeight - 1 - mapY) * screenTiles + y;
+          const tileIndex = tileY * tilesWidth + tileX;
+          const tile = tiles[tileIndex];
+          // draw tile
+          if (tile !== -1) {
+            ctx.drawImage(
+              tilesImage,
+              tile * 8, 0, 8, 8,
+              x * tilePixels, y * tilePixels, tilePixels, tilePixels
+            );
+          }
+          // draw hover
+          if (tileIndex === hoverIndex) {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.fillRect(
+              x * tilePixels, y * tilePixels, tilePixels, tilePixels
+            );
+          }
         }
       }
     }
+  }, [
+    mapHeight, mapWidth, mapX, mapY,
+    playing, tiles, tilesHeight, tilesWidth, hoverIndex
+  ]);
 
   // draw on data update
   useEffect(() => {
