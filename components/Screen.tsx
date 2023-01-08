@@ -100,6 +100,20 @@ export default function Screen() {
   const draw = useCallback(() => {
     // clear screen
     ctx.clearRect(0, 0, screenPixels, screenPixels);
+    // playing draw
+    if (playing) {
+      // calculate screen offsets
+      const maxWidth = mapWidth * screenPixels;
+      const playerCenterX = player.x + tilePixels / 2;
+      const halfScreen = screenPixels / 2;
+      const screenX = playerCenterX - halfScreen;
+      const xOffset = playerCenterX < halfScreen ? 0
+        : Math.min(maxWidth - screenPixels, screenX);
+      const maxHeight = mapHeight * screenPixels;
+      const playerCenterY = player.y + tilePixels / 2;
+      const screenY = playerCenterY - halfScreen;
+      const yOffset = playerCenterY < halfScreen ? 0
+        : Math.min(maxHeight - screenPixels, screenY);
         }
         }
       }
