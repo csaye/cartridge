@@ -114,7 +114,30 @@ export default function Screen() {
       const screenY = playerCenterY - halfScreen;
       const yOffset = playerCenterY < halfScreen ? 0
         : Math.min(maxHeight - screenPixels, screenY);
+      // for each tile
+      for (let x = 0; x < tilesWidth; x++) {
+        for (let y = 0; y < tilesHeight; y++) {
+          // calculate tile position
+          const tileIndex = y * tilesWidth + x;
+          const tile = tiles[tileIndex];
+          const tileX = x * tilePixels - xOffset;
+          const tileY = y * tilePixels - yOffset;
+          // draw tile
+          if (tile !== -1) {
+            ctx.drawImage(
+              tilesImage,
+              tile * 8, 0, 8, 8,
+              tileX, tileY, tilePixels, tilePixels
+            );
+          }
         }
+      }
+      // draw player
+      ctx.fillStyle = '#990000';
+      ctx.fillRect(
+        player.x - xOffset, player.y - yOffset,
+        tilePixels, tilePixels
+      );
         }
       }
     }
