@@ -258,11 +258,15 @@ export default function Screen() {
         }
       }
     }
+    // detect keys
+    const upKey = keys['Space'] || keys['ArrowUp'] || keys['KeyW'];
+    const leftKey = keys['ArrowLeft'] || keys['KeyA'];
+    const rightKey = keys['ArrowRight'] || keys['KeyD'];
     // handle keys
-    if (keys['Space'] && grounded) player.yVel = 8.7;
-    if (keys['ArrowRight'] && keys['ArrowLeft']) player.xAcc = 0;
-    else if (keys['ArrowRight']) player.xAcc = 5;
-    else if (keys['ArrowLeft']) player.xAcc = -5;
+    if (upKey && grounded) player.yVel = 8.7;
+    if (rightKey && leftKey) player.xAcc = 0;
+    else if (rightKey) player.xAcc = 5;
+    else if (leftKey) player.xAcc = -5;
     else player.xAcc = 0;
     // apply friction
     const movingAgainst = grounded && ((player.xAcc > 0 && player.xVel < 0)
