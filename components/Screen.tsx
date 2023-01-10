@@ -243,23 +243,33 @@ export default function Screen() {
       const leftBottomTile = playerYBottom * tilesWidth + playerXLeft;
       const rightBottomTile = playerYBottom * tilesWidth + playerXRight;
       // get tiles
-      if (tiles[leftBottomTile] !== -1 || tiles[rightBottomTile] !== -1) {
+      if (tileCollision(leftBottomTile, rightBottomTile)) {
         // if player moving down
         if (player.yVel < 0) {
           player.y = playerYTop * tilePixels;
           player.yVel = 0;
           grounded = true;
         }
+        // check death
+        if (tileDeath(rightBottomTile, leftBottomTile)) {
+          resetPlayer();
+          return;
+        }
       } else {
         // check top collision
         const leftTopTile = playerYTop * tilesWidth + playerXLeft;
         const rightTopTile = playerYTop * tilesWidth + playerXRight;
         // collide with tile at position
-        if (tiles[leftTopTile] !== -1 || tiles[rightTopTile] !== -1) {
+        if (tileCollision(leftTopTile, rightTopTile)) {
           // if player moving up
           if (player.yVel > 0) {
             player.y = (playerYTop + 1) * tilePixels;
             player.yVel = 0;
+          }
+          // check death
+          if (tileDeath(leftTopTile, rightTopTile)) {
+            resetPlayer();
+            return;
           }
         }
       }
@@ -280,22 +290,32 @@ export default function Screen() {
       // collide with tile at position
       const rightTopTile = playerYTop * tilesWidth + playerXRight;
       const rightBottomTile = playerYBottom * tilesWidth + playerXRight;
-      if (tiles[rightTopTile] !== -1 || tiles[rightBottomTile] !== -1) {
+      if (tileCollision(rightTopTile, rightBottomTile)) {
         // if player moving right
         if (player.xVel > 0) {
           player.x = playerXLeft * tilePixels;
           player.xVel = 0;
+        }
+        // check death
+        if (tileDeath(rightTopTile, rightBottomTile)) {
+          resetPlayer();
+          return;
         }
       } else {
         // check left collision
         const leftTopTile = playerYTop * tilesWidth + playerXLeft;
         const leftBottomTile = playerYBottom * tilesWidth + playerXLeft;
         // collide with tile at position
-        if (tiles[leftTopTile] !== -1 || tiles[leftBottomTile] !== -1) {
+        if (tileCollision(leftTopTile, leftBottomTile)) {
           // if player moving left
           if (player.xVel < 0) {
             player.x = (playerXLeft + 1) * tilePixels;
             player.xVel = 0;
+          }
+          // check death
+          if (tileDeath(leftTopTile, leftBottomTile)) {
+            resetPlayer();
+            return;
           }
         }
       }
