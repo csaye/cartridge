@@ -13,15 +13,19 @@ type Props = {
   playing: boolean;
   selectedIndex: number;
   setSelectedIndex: Dispatch<number>;
+  tileHoverIndex: number;
+  setTileHoverIndex: Dispatch<number>;
 };
 
 export default function Tilebar(props: Props) {
-  const { playing, selectedIndex, setSelectedIndex } = props;
+  const {
+    playing, selectedIndex, setSelectedIndex,
+    tileHoverIndex, setTileHoverIndex
+  } = props;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [hoverIndex, setHoverIndex] = useState(-1);
   const [loaded, setLoaded] = useState(false);
 
   // get canvas context on start
@@ -45,13 +49,13 @@ export default function Tilebar(props: Props) {
     ctx.drawImage(tilesImage, 0, 0, screenPixels, tilePixels);
     for (let x = 0; x < screenTiles; x++) {
       for (let y = 0; y < screenTiles; y++) {
-        if (y * screenTiles + x === hoverIndex) {
+        if (y * screenTiles + x === tileHoverIndex) {
           ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
           ctx.fillRect(x * tilePixels, y * tilePixels, tilePixels, tilePixels);
         }
       }
     }
-  }, [hoverIndex, selectedIndex, loaded]);
+  }, [tileHoverIndex, selectedIndex, loaded]);
 
   // called on mouse down
   function onMouseDown(e: MouseEvent) {
@@ -62,12 +66,12 @@ export default function Tilebar(props: Props) {
   // called on mouse move
   function onMouseMove(e: MouseEvent) {
     const mouseIndex = getMouseIndex(e, canvas, tilePixels, screenTiles, container);
-    setHoverIndex(mouseIndex);
+    setTileHoverIndex(mouseIndex);
   }
 
   // called on mouse leave
   function onMouseLeave() {
-    setHoverIndex(-1);
+    setTileHoverIndex(-1);
   }
 
   return (
@@ -84,7 +88,7 @@ export default function Tilebar(props: Props) {
         onMouseLeave={onMouseLeave}
       />
       {
-        (!playing && selectedIndex !== -1) &&
+        !playing &&
         <div
           className={styles.selectArrow}
           style={{ left: `${32 * selectedIndex + 8}px` }}

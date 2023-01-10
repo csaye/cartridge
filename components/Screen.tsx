@@ -40,6 +40,7 @@ export default function Screen() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [hoverIndex, setHoverIndex] = useState(-1);
+  const [tileHoverIndex, setTileHoverIndex] = useState(-1);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [tiles, setTiles] = useState(defaultTiles);
   const [playing, setPlaying] = useState(false);
@@ -415,8 +416,6 @@ export default function Screen() {
       <Toolbar
         playing={playing}
         setPlaying={setPlaying}
-        selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
         mapWidth={mapWidth}
         setMapWidth={setMapWidth}
         mapHeight={mapHeight}
