@@ -210,6 +210,13 @@ export default function Screen() {
       const nonColTiles = [-1, startFlagIndex, endFlagIndex];
       return !nonColTiles.includes(tileA) || !nonColTiles.includes(tileB);
     }
+    // returns whether tile death happened
+    function tileDeath(tileIndexA: number, tileIndexB: number) {
+      const tileA = tiles[tileIndexA];
+      const tileB = tiles[tileIndexB];
+      const deathTiles = [skullIndex];
+      return deathTiles.includes(tileA) || deathTiles.includes(tileB);
+    }
     // update velocity
     player.yVel += (deltaTime / 900) * player.yAcc;
     player.yVel = Math.max(-10, Math.min(player.yVel, 10));
