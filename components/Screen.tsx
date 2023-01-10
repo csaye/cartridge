@@ -201,6 +201,15 @@ export default function Screen() {
 
   // moves player based on given ms delta
   const move = useCallback((deltaTime: number) => {
+    // returns whether tile collision happened
+    function tileCollision(tileIndexA: number, tileIndexB: number) {
+      const tileA = tiles[tileIndexA];
+      const tileB = tiles[tileIndexB];
+      // handle player win
+      if (tileA === endFlagIndex || tileB === endFlagIndex) playerWin();
+      const nonColTiles = [-1, startFlagIndex, endFlagIndex];
+      return !nonColTiles.includes(tileA) || !nonColTiles.includes(tileB);
+    }
     // update velocity
     player.yVel += (deltaTime / 900) * player.yAcc;
     player.yVel = Math.max(-10, Math.min(player.yVel, 10));
