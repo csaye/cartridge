@@ -352,7 +352,12 @@ export default function Screen() {
     const tileIndex = getTileIndex(e);
     // update tiles
     const newTiles = tiles.slice();
-    newTiles[tileIndex] = selectedIndex;
+    // replace existing flags
+    if ([startFlagIndex, endFlagIndex].includes(selectedIndex)) {
+      const flagIndex = newTiles.indexOf(selectedIndex)
+      newTiles[flagIndex] = -1;
+    }
+    newTiles[tileIndex] = selectedIndex === eraserIndex ? -1 : selectedIndex;
     setTiles(newTiles);
   }
 
