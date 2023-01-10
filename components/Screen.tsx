@@ -16,12 +16,24 @@ let keys: { [key: string]: boolean } = {};
 let player = { x: 0, y: 0, xVel: 0, yVel: 0, xAcc: 0, yAcc: -10 };
 
 const mapTiles = screenTiles * screenTiles;
+const eraserIndex = 0;
+const skullIndex = 5;
+const startFlagIndex = 6;
+const endFlagIndex = 7;
 
 // set default tilemaps
-const defaultTiles = Array(mapTiles).fill(-1);
+const defaultTiles = Array(screenTiles * 4).fill(-1)
+  .concat([-1, startFlagIndex, -1, -1, -1, -1, endFlagIndex, -1])
+  .concat(Array(screenTiles).fill(3))
+  .concat(Array(screenTiles * 2).fill(2));
 
 let oldMapWidth: number;
 let oldMapHeight: number;
+
+const tileNames = [
+  'Eraser', 'Tile 1', 'Tile 2', 'Tile 3', 'Tile 4',
+  'Skull', 'Start Flag', 'End Flag'
+];
 
 export default function Screen() {
   const containerRef = useRef<HTMLDivElement>(null);
