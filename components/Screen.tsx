@@ -88,6 +88,11 @@ export default function Screen() {
     };
   }, [tiles, tilesWidth]);
 
+  // called on player win
+  function playerWin() {
+    setPlaying(false);
+  }
+
   // listen for keys
   useEffect(() => {
     // key listeners
@@ -338,7 +343,7 @@ export default function Screen() {
       player.xVel = player.xVel / (1 + damping * (deltaTime / 100));
       if (Math.abs(player.xVel) < 0.05) player.xVel = 0;
     }
-  }, [mapWidth, mapHeight, tiles, tilesWidth]);
+  }, [mapWidth, mapHeight, tilesWidth, tiles, resetPlayer]);
 
   // set up game loop
   useEffect(() => {
@@ -358,11 +363,11 @@ export default function Screen() {
     // run game loop
     let loop: number;
     if (playing) {
-      player = { x: 0, y: 0, xVel: 0, yVel: 0, xAcc: 0, yAcc: -10 };
+      resetPlayer();
       loop = requestAnimationFrame(gameLoop);
     }
     return () => cancelAnimationFrame(loop);
-  }, [draw, playing, move]);
+  }, [draw, playing, move, resetPlayer]);
 
   // sketches screen with given mouse data
   function sketch(e: MouseEvent) {
