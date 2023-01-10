@@ -76,6 +76,17 @@ export default function Screen() {
     return tileY * tilesWidth + tileX;
   }
 
+  // resets player
+  const resetPlayer = useCallback(() => {
+    const start = tiles.indexOf(startFlagIndex);
+    const startX = start === -1 ? 0 : start % tilesWidth;
+    const startY = start === -1 ? 0 : Math.floor(start / tilesWidth);
+    player = {
+      x: startX * tilePixels, y: startY * tilePixels,
+      xVel: 0, yVel: 0, xAcc: 0, yAcc: -10
+    };
+  }, [tiles, tilesWidth]);
+
   // listen for keys
   useEffect(() => {
     // key listeners
