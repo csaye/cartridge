@@ -50,7 +50,35 @@ export default function Toolbar(props: Props) {
             icon="play"
           />
       }
+      <span style={{ flexGrow: 1 }} />
       {
+        !playing &&
+        <>
+          <select
+            value={mapWidth}
+            onChange={e => {
+              const newMapWidth = parseInt(e.target.value);
+              if (mapX >= newMapWidth) setMapX(newMapWidth - 1);
+              setMapWidth(newMapWidth);
+            }}
+          >
+            {Array(maxHorizontal).fill(0).map((v, i) =>
+              <option key={i} value={i + 1}>↔ {i + 1}</option>
+            )}
+          </select>
+          <select
+            value={mapHeight}
+            onChange={e => {
+              const newMapHeight = parseInt(e.target.value);
+              if (mapY >= newMapHeight) setMapY(newMapHeight - 1);
+              setMapHeight(newMapHeight);
+            }}
+          >
+            {Array(maxVertical).fill(0).map((v, i) =>
+              <option key={i} value={i + 1}>↕ {i + 1}</option>
+            )}
+          </select>
+        </>
       }
     </div>
   );
