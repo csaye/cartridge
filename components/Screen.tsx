@@ -12,6 +12,7 @@ let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 let sketching = false;
 let tilesImage: HTMLImageElement;
+let playerImage: HTMLImageElement;
 let keys: { [key: string]: boolean } = {};
 let player = { x: 0, y: 0, xVel: 0, yVel: 0, xAcc: 0, yAcc: -10 };
 
@@ -57,6 +58,8 @@ export default function Screen() {
   useEffect(() => {
     tilesImage = new Image();
     tilesImage.src = '/img/sprites/tiles.png';
+    playerImage = new Image();
+    playerImage.src = '/img/sprites/player.png';
   }, []);
 
   // get canvas context on start
