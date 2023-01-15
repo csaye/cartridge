@@ -517,6 +517,11 @@ export default function Screen() {
                 className={styles.right}
               />
             }
+            <div className={styles.tile}>
+              {tileNames[
+                tileHoverIndex === -1 ? selectedIndex : tileHoverIndex
+              ]}
+            </div>
             <div className={styles.coords}>
               <span>({mapX + 1}, {mapY + 1})</span>
             </div>
@@ -540,6 +545,8 @@ export default function Screen() {
         playing={playing}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
+        tileHoverIndex={tileHoverIndex}
+        setTileHoverIndex={setTileHoverIndex}
       />
     </div>
   );
