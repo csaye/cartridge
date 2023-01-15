@@ -50,14 +50,6 @@ export default function Toolbar(props: Props) {
             icon="play"
           />
       }
-      <IconButton
-        onClick={() => setSelectedIndex(-1)}
-        icon="eraser"
-      />
-      <IconButton
-        onClick={() => { }}
-        icon="save"
-      />
       {
         (!playing && selectedIndex === -1) &&
         <div className={styles.selectArrow} />
