@@ -7,17 +7,6 @@
   align-items: center;
   position: relative;
 
-  >.selectArrow {
-    position: absolute;
-    bottom: 40px;
-    left: 40px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid #fff;
-  }
-
   >select {
     width: 64px;
     height: 32px;
