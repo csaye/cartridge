@@ -5,8 +5,6 @@ import IconButton from './IconButton';
 type Props = {
   playing: boolean;
   setPlaying: Dispatch<boolean>;
-  selectedIndex: number;
-  setSelectedIndex: Dispatch<number>;
   mapWidth: number;
   setMapWidth: Dispatch<number>;
   mapHeight: number;
@@ -22,7 +20,7 @@ const maxHorizontal = 16;
 
 export default function Toolbar(props: Props) {
   const {
-    playing, setPlaying, selectedIndex, setSelectedIndex,
+    playing, setPlaying,
     mapWidth, setMapWidth, mapHeight, setMapHeight,
     mapX, setMapX, mapY, setMapY
   } = props;
