@@ -166,10 +166,10 @@ export default function Screen() {
         }
       }
       // draw player
-      ctx.fillStyle = '#990000';
-      ctx.fillRect(
-        player.x - xOffset, player.y - yOffset,
-        tilePixels, tilePixels
+      ctx.drawImage(
+        playerImage,
+        grounded ? 0 : 8, player.facing === 1 ? 0 : 8, 8, 8,
+        player.x - xOffset, player.y - yOffset, tilePixels, tilePixels
       );
     } else { // editing draw
       // for each tile
