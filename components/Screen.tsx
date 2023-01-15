@@ -14,7 +14,8 @@ let sketching = false;
 let tilesImage: HTMLImageElement;
 let playerImage: HTMLImageElement;
 let keys: { [key: string]: boolean } = {};
-let player = { x: 0, y: 0, xVel: 0, yVel: 0, xAcc: 0, yAcc: -10 };
+let player = { x: 0, y: 0, xVel: 0, yVel: 0, xAcc: 0, yAcc: -10, facing: 1 };
+let grounded = true;
 
 const mapTiles = screenTiles * screenTiles;
 const eraserIndex = 0;
@@ -87,7 +88,7 @@ export default function Screen() {
     const startY = start === -1 ? 0 : Math.floor(start / tilesWidth);
     player = {
       x: startX * tilePixels, y: startY * tilePixels,
-      xVel: 0, yVel: 0, xAcc: 0, yAcc: -10
+      xVel: 0, yVel: 0, xAcc: 0, yAcc: -10, facing: 1
     };
   }, [tiles, tilesWidth]);
 
@@ -231,7 +232,7 @@ export default function Screen() {
     player.xVel += (deltaTime / 900) * player.xAcc;
     player.xVel = Math.max(-5, Math.min(player.xVel, 5));
     // update position
-    let grounded = player.y >= mapHeight * screenPixels - tilePixels;
+    grounded = player.y >= mapHeight * screenPixels - tilePixels;
     player.x += (deltaTime / 25) * player.xVel;
     player.y += (deltaTime / 25) * -player.yVel;
     // handle y movement
@@ -335,8 +336,14 @@ export default function Screen() {
     // handle keys
     if (upKey && grounded) player.yVel = 8.7;
     if (rightKey && leftKey) player.xAcc = 0;
-    else if (rightKey) player.xAcc = 5;
-    else if (leftKey) player.xAcc = -5;
+    else if (rightKey) {
+      player.xAcc = 5;
+      player.facing = 1;
+    }
+    else if (leftKey) {
+      player.xAcc = -5;
+      player.facing = -1;
+    }
     else player.xAcc = 0;
     // apply friction
     const movingAgainst = grounded && ((player.xAcc > 0 && player.xVel < 0)
