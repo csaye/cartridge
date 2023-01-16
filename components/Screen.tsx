@@ -113,6 +113,14 @@ export default function Screen() {
     const winHeight = winHeightPx * winSize;
     const winX = screenPixels / 2 - winWidth / 2;
     const winY = screenPixels / 2 - winHeight / 2;
+    // draws win image to screen
+    function drawWin(alt: boolean) {
+      if (!images) throw 'win before image load';
+      ctx.drawImage(
+        images.win, 0, alt ? winHeightPx : 0, winWidthPx, winHeightPx,
+        winX, winY, winWidth, winHeight
+      );
+    }
   }, [images]);
 
   // listen for keys
