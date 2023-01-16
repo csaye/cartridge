@@ -13,6 +13,8 @@ type Props = {
   setMapX: Dispatch<number>;
   mapY: number;
   setMapY: Dispatch<number>;
+  missingEndFlag: boolean;
+  paused: boolean;
 };
 
 const maxVertical = 4;
@@ -22,7 +24,8 @@ export default function Toolbar(props: Props) {
   const {
     playing, setPlaying,
     mapWidth, setMapWidth, mapHeight, setMapHeight,
-    mapX, setMapX, mapY, setMapY
+    mapX, setMapX, mapY, setMapY,
+    missingEndFlag, paused
   } = props;
 
   // deselects pressed button
@@ -37,6 +40,7 @@ export default function Toolbar(props: Props) {
         playing ?
           <IconButton
             onClick={() => {
+              if (paused) return;
               setPlaying(false);
               blurButton();
             }}
@@ -44,6 +48,11 @@ export default function Toolbar(props: Props) {
           /> :
           <IconButton
             onClick={() => {
+              if (paused) return;
+              if (missingEndFlag) {
+                window.alert('Your level is missing an end flag!');
+                return;
+              }
               setPlaying(true);
               blurButton();
             }}
