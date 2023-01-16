@@ -11,8 +11,6 @@ let container: HTMLDivElement;
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 let sketching = false;
-let tilesImage: HTMLImageElement;
-let playerImage: HTMLImageElement;
 let keys: { [key: string]: boolean } = {};
 let player = { x: 0, y: 0, xVel: 0, yVel: 0, xAcc: 0, yAcc: -10, facing: 1 };
 let grounded = true;
@@ -37,6 +35,8 @@ const tileNames = [
   'Skull', 'Start Flag', 'End Flag'
 ];
 
+type ImageMap = { [path: string]: HTMLImageElement };
+
 export default function Screen() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -52,15 +52,26 @@ export default function Screen() {
   const [mapX, setMapX] = useState(0);
   const [mapY, setMapY] = useState(0);
 
+  const [images, setImages] = useState<ImageMap>();
+
   const tilesWidth = mapWidth * screenTiles;
   const tilesHeight = mapHeight * screenTiles;
 
   // initialize images
   useEffect(() => {
-    tilesImage = new Image();
-    tilesImage.src = '/img/sprites/tiles.png';
-    playerImage = new Image();
-    playerImage.src = '/img/sprites/player.png';
+    const imagePaths = ['tiles', 'player'];
+    let loadedCount = 0;
+    let imageMap: ImageMap = {};
+    // for each image path
+    for (const path of imagePaths) {
+      // load path and increment count
+      imageMap[path] = new Image();
+      imageMap[path].src = `/img/sprites/${path}.png`;
+      imageMap[path].onload = () => {
+        loadedCount++;
+        if (loadedCount === imagePaths.length) setImages(imageMap);
+      }
+    }
   }, []);
 
   // get canvas context on start
@@ -131,6 +142,8 @@ export default function Screen() {
 
   // draws screen
   const draw = useCallback(() => {
+    // return if loading images
+    if (!images) return;
     // clear screen
     ctx.clearRect(0, 0, screenPixels, screenPixels);
     // playing draw
@@ -158,7 +171,7 @@ export default function Screen() {
           // draw tile
           if (tile !== -1) {
             ctx.drawImage(
-              tilesImage,
+              images.tiles,
               tile * 8, 0, 8, 8,
               tileX, tileY, tilePixels, tilePixels
             );
@@ -167,7 +180,7 @@ export default function Screen() {
       }
       // draw player
       ctx.drawImage(
-        playerImage,
+        images.player,
         grounded ? 0 : 8, player.facing === 1 ? 0 : 8, 8, 8,
         player.x - xOffset, player.y - yOffset, tilePixels, tilePixels
       );
@@ -183,7 +196,7 @@ export default function Screen() {
           // draw tile
           if (tile !== -1) {
             ctx.drawImage(
-              tilesImage,
+              images.tiles,
               tile * 8, 0, 8, 8,
               x * tilePixels, y * tilePixels, tilePixels, tilePixels
             );
@@ -199,7 +212,7 @@ export default function Screen() {
       }
     }
   }, [
-    mapHeight, mapWidth, mapX, mapY,
+    mapHeight, mapWidth, mapX, mapY, images,
     playing, tiles, tilesHeight, tilesWidth, hoverIndex
   ]);
 
