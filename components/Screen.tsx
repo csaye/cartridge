@@ -47,6 +47,7 @@ export default function Screen() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [tiles, setTiles] = useState(defaultTiles);
   const [playing, setPlaying] = useState(false);
+  const [paused, setPaused] = useState(false);
 
   const [mapWidth, setMapWidth] = useState(1);
   const [mapHeight, setMapHeight] = useState(1);
@@ -57,6 +58,8 @@ export default function Screen() {
 
   const tilesWidth = mapWidth * screenTiles;
   const tilesHeight = mapHeight * screenTiles;
+
+  const missingEndFlag = tiles.indexOf(endFlagIndex) === -1;
 
   // initialize images
   useEffect(() => {
@@ -392,7 +395,7 @@ export default function Screen() {
       player.xVel = player.xVel / (1 + damping * (deltaTime / 100));
       if (Math.abs(player.xVel) < 0.05) player.xVel = 0;
     }
-  }, [mapWidth, mapHeight, tilesWidth, tiles, resetPlayer]);
+  }, [mapWidth, mapHeight, tilesWidth, tiles, resetPlayer, playerWin]);
 
   // set up game loop
   useEffect(() => {
@@ -411,12 +414,13 @@ export default function Screen() {
     }
     // run game loop
     let loop: number;
-    if (playing) {
+    if (playing && !paused) {
+      // start game
       resetPlayer();
       loop = requestAnimationFrame(gameLoop);
     }
     return () => cancelAnimationFrame(loop);
-  }, [draw, playing, move, resetPlayer]);
+  }, [draw, playing, move, resetPlayer, paused]);
 
   // sketches screen with given mouse data
   function sketch(e: MouseEvent) {
@@ -519,6 +523,8 @@ export default function Screen() {
         setMapX={setMapX}
         mapY={mapY}
         setMapY={setMapY}
+        missingEndFlag={missingEndFlag}
+        paused={paused}
       />
       <div className={styles.view} ref={containerRef}>
         {
