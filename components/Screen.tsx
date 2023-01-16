@@ -30,6 +30,7 @@ const defaultTiles = Array(screenTiles * 4).fill(-1)
 let oldMapWidth: number;
 let oldMapHeight: number;
 
+const imagePaths = ['tiles', 'player', 'win'];
 const tileNames = [
   'Eraser', 'Tile 1', 'Tile 2', 'Tile 3', 'Tile 4',
   'Skull', 'Start Flag', 'End Flag'
@@ -59,7 +60,6 @@ export default function Screen() {
 
   // initialize images
   useEffect(() => {
-    const imagePaths = ['tiles', 'player'];
     let loadedCount = 0;
     let imageMap: ImageMap = {};
     // for each image path
@@ -104,9 +104,16 @@ export default function Screen() {
   }, [tiles, tilesWidth]);
 
   // called on player win
-  function playerWin() {
-    setPlaying(false);
-  }
+  const playerWin = useCallback(() => {
+    // set win image dimensions
+    const winSize = 4;
+    const winWidthPx = 39;
+    const winHeightPx = 18;
+    const winWidth = winWidthPx * winSize;
+    const winHeight = winHeightPx * winSize;
+    const winX = screenPixels / 2 - winWidth / 2;
+    const winY = screenPixels / 2 - winHeight / 2;
+  }, [images]);
 
   // listen for keys
   useEffect(() => {
