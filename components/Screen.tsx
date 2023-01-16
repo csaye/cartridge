@@ -121,6 +121,17 @@ export default function Screen() {
         winX, winY, winWidth, winHeight
       );
     }
+    // run win animation
+    setPaused(true);
+    drawWin(false);
+    setTimeout(() => drawWin(true), 500);
+    setTimeout(() => drawWin(false), 1000);
+    setTimeout(() => drawWin(true), 1500);
+    setTimeout(() => drawWin(false), 2000);
+    setTimeout(() => {
+      setPlaying(false);
+      setPaused(false);
+    }, 3000);
   }, [images]);
 
   // listen for keys
